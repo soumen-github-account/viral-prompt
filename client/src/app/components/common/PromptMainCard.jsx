@@ -127,7 +127,7 @@ export default function PromptMainCard({
       <div className="grid lg:grid-cols-2 gap-0">
 
         {/* LEFT IMAGE */}
-        <div className="relative h-[280px] sm:h-[340px] lg:h-[420px] xl:h-[460px] overflow-hidden bg-slate-100 rounded-b-none">
+        <div className="relative h-[350px] sm:h-[340px] lg:h-[420px] xl:h-[460px] overflow-hidden bg-slate-100 rounded-b-none">
 
           <img
             src={card.image}

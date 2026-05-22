@@ -27,7 +27,7 @@ const PromptCard = ({ card }) => {
     <div className="w-full break-inside-avoid mb-5">
       <div className="bg-white rounded-3xl border border-gray-100 overflow-hidden shadow-sm hover:shadow-md transition-all duration-300 group flex flex-col justify-between">
         
-        <div className={`relative bg-slate-900 overflow-hidden shrink-0 h-[250px]`}>
+        <div className={`relative bg-slate-900 overflow-hidden shrink-0 h-[350px]`}>
           <img
             src={card.image}
             alt={card.title}

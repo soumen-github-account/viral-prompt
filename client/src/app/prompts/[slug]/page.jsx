@@ -133,8 +133,7 @@ export default async function PromptsPage({
 
   await connectDB();
 
-  const { slug } =
-    await params;
+  const { slug } = await params;
 
   // get category
   const category =
