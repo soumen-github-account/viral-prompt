@@ -8,9 +8,9 @@ const categorySchema = new mongoose.Schema({
     badge: {type: String, required: true},
     badgeBg: {type: String, default: ""},
     tags: [String],
-    likes: {type: String, default: "0"},
+    likes: {type: Number, default: 0},
 
-    copies: {type: String, default: "0"},
+    copies: {type: Number, default: 0},
 }, {timestamps: true})
 
 const Category =

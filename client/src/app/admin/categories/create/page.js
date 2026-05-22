@@ -1,163 +1,9 @@
-// // app/admin/categories/create/page.js
-
-// "use client";
-
-// import { useState } from "react";
-
-// export default function CreateCategoryPage() {
-
-//   const [formData, setFormData] = useState({
-//     title: "",
-//     description: "",
-//     slug: "",
-//     tool: "",
-//     badge: "",
-//     badgeBg: "",
-//     tags: "",
-//   });
-
-//   const [image, setImage] = useState(null);
-
-//   const handleChange = (e) => {
-//     setFormData({
-//       ...formData,
-//       [e.target.name]: e.target.value,
-//     });
-//   };
-
-//   const handleSubmit = async (e) => {
-//     e.preventDefault();
-
-//     try {
-
-//       const data = new FormData();
-
-//       data.append("title", formData.title);
-//       data.append("description", formData.description);
-//       data.append("slug", formData.slug);
-//       data.append("tool", formData.tool);
-//       data.append("badge", formData.badge);
-//       data.append("badgeBg", formData.badgeBg);
-
-//       data.append(
-//         "tags",
-//         JSON.stringify(
-//           formData.tags
-//             .split(",")
-//             .map((tag) => tag.trim())
-//         )
-//       );
-
-//       data.append("image", image);
-
-//       const res = await fetch(
-//         "/api/categories",
-//         {
-//           method: "POST",
-//           body: data,
-//         }
-//       );
-
-//       const result = await res.json();
-
-//       console.log(result);
-
-//     } catch (error) {
-//       console.log(error);
-//     }
-//   };
-
-//   return (
-//     <div className="py-25 px-4 w-full lg:px-40 flex-col items-center justify-center">
-
-//       <h1 className="text-3xl font-bold mb-6">
-//         Create Category
-//       </h1>
-
-//       <form
-//         onSubmit={handleSubmit}
-//         className="space-y-4"
-//       >
-
-//         <input
-//           type="text"
-//           name="title"
-//           placeholder="Title"
-//           onChange={handleChange}
-//           className="w-full border p-3 rounded-lg"
-//         />
-
-//         <textarea
-//           name="description"
-//           placeholder="Description"
-//           onChange={handleChange}
-//           className="w-full border p-3 rounded-lg"
-//         />
-
-//         <input
-//           type="text"
-//           name="slug"
-//           placeholder="Slug"
-//           onChange={handleChange}
-//           className="w-full border p-3 rounded-lg"
-//         />
-
-//         <input
-//           type="text"
-//           name="tool"
-//           placeholder="Tool"
-//           onChange={handleChange}
-//           className="w-full border p-3 rounded-lg"
-//         />
-
-//         <input
-//           type="text"
-//           name="badge"
-//           placeholder="Badge"
-//           onChange={handleChange}
-//           className="w-full border p-3 rounded-lg"
-//         />
-
-//         <input
-//           type="text"
-//           name="badgeBg"
-//           placeholder="Badge Bg"
-//           onChange={handleChange}
-//           className="w-full border p-3 rounded-lg"
-//         />
-
-//         <input
-//           type="text"
-//           name="tags"
-//           placeholder="girls, ai, cinematic"
-//           onChange={handleChange}
-//           className="w-full border p-3 rounded-lg"
-//         />
-
-//         <input
-//           type="file"
-//           onChange={(e) =>
-//             setImage(e.target.files[0])
-//           }
-//           className="w-full border p-3 rounded-lg"
-//         />
-
-//         <button
-//           type="submit"
-//           className="bg-black text-white px-5 py-3 rounded-lg"
-//         >
-//           Create Category
-//         </button>
-
-//       </form>
-
-//     </div>
-//   );
-// }
 
 "use client";
 
 import { useState } from "react";
+import toast from "react-hot-toast";
+import { TbLoader3 } from "react-icons/tb";
 
 export default function CreateCategoryPage() {
 
@@ -215,6 +61,8 @@ export default function CreateCategoryPage() {
 
   const [selectedTags, setSelectedTags] =
     useState([]);
+
+  const [loading, setLoading] = useState(false)
 
   const [formData, setFormData] = useState({
     title: "",
@@ -312,7 +160,7 @@ export default function CreateCategoryPage() {
   const handleSubmit = async (e) => {
 
     e.preventDefault();
-
+    setLoading(true)
     try {
 
       const data = new FormData();
@@ -352,12 +200,17 @@ export default function CreateCategoryPage() {
 
       const result = await res.json();
 
+      if(result.success){
+        toast.success(result.message)
+      } else{
+        toast.error(result.message)
+      }
       console.log(result);
-
+      setLoading(false)
     } catch (error) {
-
+      toast.error(error)
       console.log(error);
-
+      setLoading(false)
     }
 
   };
@@ -613,10 +466,18 @@ export default function CreateCategoryPage() {
         {/* BUTTON */}
 
         <button
+          disabled={loading}
           type="submit"
           className="bg-gradient-to-r from-pink-600 to-pink-500 text-white px-8 py-4 rounded-2xl font-bold shadow-lg shadow-pink-200 hover:scale-[1.02] transition"
         >
-          Create Category
+          {loading ? 
+            (
+              <span className="w-full flex items-center gap-4">
+                <TbLoader3 className="animate-spin text-[25px] transition-all duration-200" />
+                Please wait
+              </span>
+            ) : "Create Category"
+          }
         </button>
 
       </form>

@@ -52,6 +52,8 @@ export const createCategory = async (req) => {
       }
     );
 
+    const likes = parseFloat((Math.random() * 4 + 1).toFixed(1));
+    const copies = parseFloat((Math.random() * 4 + 1).toFixed(1));
     // save category
     const category = await Category.create({
       title,
@@ -61,6 +63,8 @@ export const createCategory = async (req) => {
       badge,
       badgeBg,
       tags,
+      likes,
+      copies,
       image: uploadResult.secure_url,
     });
 

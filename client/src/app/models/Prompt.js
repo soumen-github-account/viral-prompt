@@ -2,6 +2,7 @@ import mongoose from "mongoose";
 
 const promptSchema = new mongoose.Schema({
     categoryId: {type: mongoose.Schema.Types.ObjectId, ref: "Category"},
+    categorySlug: {type: String, required: true},
     title: {type: String, required: true},
     description: {type: String, required: true},
     prompt: {type: String, required: true},
@@ -12,7 +13,8 @@ const promptSchema = new mongoose.Schema({
     badgeBg: {type: String, default: "" },
     tags: [String],
 
-    likes: {type: Number, default: 21}
+    likes: {type: Number, default: 0},
+    copies: {type: Number, default: 0}
     
 }, {timestamps: true})
 

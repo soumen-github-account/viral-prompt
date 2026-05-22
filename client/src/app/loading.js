@@ -62,7 +62,7 @@ export default function LoadingPage() {
         {/* Text Messaging Loading Blocks Layout */}
         <div className="space-y-2">
           <h2 className="text-2xl font-extrabold text-slate-900 tracking-tight flex items-center justify-center">
-            Prompt<span className="text-[#FF2A85]">ly</span>
+            Viral<span className="text-[#FF2A85]">Prompt</span>
             <span className="inline-flex gap-0.5 ml-1.5">
               <span className="w-1 h-1 bg-[#FF2A85] rounded-full animate-bounce" style={{ animationDelay: '0s' }} />
               <span className="w-1 h-1 bg-[#FF2A85] rounded-full animate-bounce" style={{ animationDelay: '0.2s' }} />

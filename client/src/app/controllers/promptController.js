@@ -1,5 +1,6 @@
 import cloudinary from "../lib/cloudinary";
 import connectDB from "../lib/mongodb"
+import Category from "../models/Category";
 import Prompt from "../models/Prompt";
 
 
@@ -15,7 +16,11 @@ export const createPrompt = async(req) => {
         const promptText = formData.get("prompt");
         const categoryId = formData.get("categoryId");
         const tool = formData.get("tool");
+        const badge = formData.get("badge");
+        const badgeBg = formData.get("badgeBg");
         const imageFile = formData.get("image");
+
+        const tags = JSON.parse(formData.get("tags") || "[]");
 
         if(!imageFile){
             return Response.json({
@@ -42,13 +47,37 @@ export const createPrompt = async(req) => {
             }
         );
 
+        const category = await Category.findById(categoryId)
+        if (!category) {
+          return Response.json(
+            {
+              success: false,
+              message: "Category not found",
+            },
+            {
+              status: 404,
+            }
+          );
+        }
+        const categorySlug = category.slug
+
+        const likes = (Math.random() * 4 + 1).toFixed(1);
+        const copies = (Math.random() * 4 + 1).toFixed(1);
+
+
         // save prompt
         const newPrompt = await Prompt.create({
             title,
             description,
             prompt: promptText,
             categoryId,
+            categorySlug,
             tool,
+            badge,
+            badgeBg,
+            tags,
+            likes,
+            copies,
             image: uploadResult.secure_url,
         });
 

@@ -31,20 +31,20 @@ export default function About() {
 
   const team = [
     {
-      name: 'Aarav Sharma',
-      role: 'Founder & AI Architect',
-      image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=300&q=80',
+      name: 'Soumen Das',
+      role: 'Founder & Full-Stack Developer',
+      image: '/images/soumen.png'
     },
-    {
-      name: 'Nisha Patel',
-      role: 'Lead UI/UX Designer',
-      image: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=300&q=80',
-    },
-    {
-      name: 'Rohan Verma',
-      role: 'Full-Stack Developer',
-      image: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=300&q=80',
-    }
+    // {
+    //   name: 'Nisha Patel',
+    //   role: 'Lead UI/UX Designer',
+    //   image: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=300&q=80',
+    // },
+    // {
+    //   name: 'Rohan Verma',
+    //   role: 'Full-Stack Developer',
+    //   image: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=300&q=80',
+    // }
   ];
 
   return (

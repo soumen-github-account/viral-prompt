@@ -237,6 +237,8 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import toast from "react-hot-toast";
+import { TbLoader3 } from "react-icons/tb";
 
 export default function CreatePromptPage() {
 
@@ -303,6 +305,8 @@ export default function CreatePromptPage() {
 
   const [preview, setPreview] =
     useState(null);
+
+  const [loading, setLoading] = useState(false)
 
   const [formData, setFormData] =
     useState({
@@ -467,7 +471,7 @@ export default function CreatePromptPage() {
   ) => {
 
     e.preventDefault();
-
+    setLoading(true)
     try {
 
       const data =
@@ -531,12 +535,17 @@ export default function CreatePromptPage() {
       const result =
         await res.json();
 
+        if(result.success){
+          toast.success(result.message)
+        } else{
+          toast.error(result.message)
+        }
       console.log(result);
-
+        setLoading(false)
     } catch (error) {
-
+      toast.error(error)
       console.log(error);
-
+      setLoading(false)
     }
 
   };
@@ -884,10 +893,18 @@ export default function CreatePromptPage() {
           {/* BUTTON */}
 
           <button
+            disabled={loading}
             type="submit"
             className="w-full bg-gradient-to-r from-[#FF416C] to-[#FF2A85] hover:opacity-95 text-white py-4 rounded-2xl font-extrabold shadow-lg shadow-pink-200 transition"
           >
-            Create Prompt
+            {loading ? (
+              <span className="flex items-center w-full justify-center gap-4">
+                <TbLoader3 className="text-[25px] animate-spin transition-all duration-200" /> Please wait...
+              </span>
+             ): 
+              "Create Prompt"
+            }
+            
           </button>
 
         </form>

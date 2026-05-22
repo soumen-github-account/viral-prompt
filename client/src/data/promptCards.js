@@ -426,8 +426,8 @@ export const prompts = [
     image:
       "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=1200&q=80",
     tool: "Midjourney",
-    badge: "Trending",
-    badgeBg: "bg-pink-600",
+    kbadge: "Trending",
+    badgeBg: "bg-pin-600",
     tags: ["girls", "saree", "Indian", "Trending"],
     likes: "2.4K",
     copies: "12.6K",

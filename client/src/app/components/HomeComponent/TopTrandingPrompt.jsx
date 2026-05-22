@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 import PromptCard from "../common/PromptCard";
-import { categories, promptCards } from "@/data/promptCards";
+// import { categories } from "@/data/promptCards";
 import Masonry from "react-masonry-css";
 import { IoMdHeartEmpty } from "react-icons/io";
 import { LuNotebook } from "react-icons/lu";
@@ -11,6 +11,7 @@ import { HiSparkles, HiOutlineUsers } from "react-icons/hi2";
 import { FaFire, FaCopy } from "react-icons/fa6";
 import Link from "next/link";
 import { BsStars } from "react-icons/bs";
+import { useAppContext } from "@/contexts/AppContext";
 
 const stats = [
   {
@@ -110,7 +111,7 @@ export default function TopTrandingPrompt() {
   // ];
 
   // Infinite loop ke liye array double kar rahe hain
-  
+  const {categories} = useAppContext()
   const categoriesSlide = categories;
 
   const duplicatedCategories = [...categoriesSlide, ...categoriesSlide];

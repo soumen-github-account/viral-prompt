@@ -1,116 +1,3 @@
-// "use client";
-// import React, { useState } from "react";
-// import PromptCard from "../common/PromptCard";
-// import { promptCards } from "@/data/promptCards";
-// import { IoSearchOutline } from "react-icons/io5";
-// import { categories } from "@/data/promptCards";
-// import CategoryRow from "../common/CategoryRow";
-
-// export default function AllCategory() {
-//   return (
-//     <div className="min-h-screen pt-25 px-4 sm:px-10 bg-[#FAFBFD] text-slate-900 selection:bg-pink-100">
-//       <main className="lg:col-span-9 space-y-6">
-//         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
-//           <div className="space-y-1">
-//             <h1 className="max-sm:text-2xl text-3xl font-extrabold tracking-tight text-slate-900">
-//               Explore <span className="text-[#FF2A85]">AI Prompts</span>{" "}
-//               <span className="text-sm font-normal text-pink-400 ml-1">✦</span>
-//             </h1>
-//             <p className="text-gray-400 text-xs font-medium">
-//               Discover trending prompts across every AI art style.
-//             </p>
-//           </div>
-
-//           <div className="bg-pink-50/50 max-sm:hidden border border-pink-100/50 rounded-2xl px-4 py-2.5 flex items-center space-x-3 self-start md:self-auto shadow-sm">
-//             <span className="text-lg">🔥</span>
-//             <div>
-//               <p className="text-xs font-extrabold text-[#FF2A85] tracking-tight">
-//                 20.4K
-//               </p>
-//               <p className="text-[10px] font-bold text-gray-400">
-//                 Prompts Added Today
-//               </p>
-//             </div>
-//           </div>
-//         </div>
-
-//         <div className="flex flex-col gap-3">
-//           <div className="flex-1 bg-white rounded-full p-1.5 border border-gray-100 flex items-center shadow-sm">
-//             <span className="pl-3 text-gray-400 text-[25px]">
-//               <IoSearchOutline />
-//             </span>
-//             <input
-//               type="text"
-//               placeholder="Search prompts, styles, themes..."
-//               className="w-full pl-2 pr-4 text-xs font-medium bg-transparent focus:outline-none"
-//             />
-//             <button className="bg-[#FF2A85] text-white w-10 lg:w-8 h-8 rounded-full flex items-center justify-center text-[20px] shadow-sm shadow-pink-200 cursor-pointer hover:bg-pink-600 hover:shadow-md hover:shadow-pink-400 transition-all duration-200">
-//               <IoSearchOutline />
-//             </button>
-//           </div>
-
-//           <div className="flex pb-2 items-center space-x-1.5 overflow-x-scroll custom-scrollbar">
-//             <span className="bg-pink-50 border border-pink-100 text-xs font-bold text-[#FF2A85] px-4 py-2.5 rounded-full cursor-pointer shrink-0">
-//               📈 Trending
-//             </span>
-//             <span className="bg-white border border-gray-100 hover:bg-gray-50 text-xs font-semibold text-gray-500 px-4 py-2.5 rounded-full cursor-pointer shrink-0">
-//               ✨ New
-//             </span>
-//             <span className="bg-white border border-gray-100 hover:bg-gray-50 text-xs font-semibold text-gray-500 px-4 py-2.5 rounded-full cursor-pointer shrink-0">
-//               📋 Most Copied
-//             </span>
-//             <span className="bg-white border border-gray-100 hover:bg-gray-50 text-xs font-semibold text-gray-500 px-4 py-2.5 rounded-full cursor-pointer shrink-0">
-//               🎁 Free
-//             </span>
-//             <span className="bg-white border border-gray-100 hover:bg-gray-50 text-xs font-semibold text-gray-500 px-4 py-2.5 rounded-full cursor-pointer shrink-0">
-//               ⭐ Premium
-//             </span>
-//           </div>
-//         </div>
-
-//         {/* <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-5">
-//           {categories.map((card, idx) => (
-//             <PromptCard key={idx} card={card}/>
-//           ))}
-//         </div> */}
-
-//         <div className="space-y-10 pt-4">
-//           <CategoryRow
-//             title="New Prompts"
-//             subtitle="Fresh AI prompts added today"
-//             icon="✨"
-//             slug="new"
-//             data={categories.filter((item) => item.badge === "New")}
-//           />
-
-//           <CategoryRow
-//             title="Trending"
-//             subtitle="Most viral prompts today"
-//             icon="🔥"
-//             slug="trending"
-//             data={categories.filter((item) => item.badge === "Trending")}
-//           />
-
-//           <CategoryRow
-//             title="Popular Collections"
-//             subtitle="Most copied categories"
-//             icon="⭐"
-//             slug="popular"
-//             data={categories.filter((item) => item.badge === "Popular")}
-//           />
-
-//           <CategoryRow
-//             title="Hot Right Now"
-//             subtitle="Top performing prompts"
-//             icon="🚀"
-//             slug="hot"
-//             data={categories.filter((item) => item.badge === "Hot")}
-//           />
-//         </div>
-//       </main>
-//     </div>
-//   );
-// }
 
 
 "use client";
@@ -120,12 +7,13 @@ import React, { useMemo, useState } from "react";
 import { IoSearchOutline } from "react-icons/io5";
 import { HiSparkles } from "react-icons/hi2";
 
-import { categories } from "@/data/promptCards";
+// import { categories } from "@/data/promptCards";
 
 import CategoryRow from "../common/CategoryRow";
+import { useAppContext } from "@/contexts/AppContext";
 
 export default function AllCategory() {
-
+  const {categories} = useAppContext();
   const [search, setSearch] = useState("");
 
   const [selectedTag, setSelectedTag] =
@@ -154,7 +42,7 @@ export default function AllCategory() {
 
     return ["All", ...Array.from(tags)];
 
-  }, []);
+  }, [categories]);
 
   // FILTERED DATA
   const filteredCategories =
@@ -171,8 +59,8 @@ export default function AllCategory() {
           tag.toLowerCase().includes(query)
         ) ||
         item.tool
-          .toLowerCase()
-          .includes(query);
+        ?.toLowerCase()
+        .includes(query);
 
       const matchTag =
         selectedTag === "All" ||
@@ -302,6 +190,8 @@ export default function AllCategory() {
           <div className="space-y-10">
 
             {/* NEW */}
+            {filteredCategories.filter((item) => item.badge === "New").length > 0 &&
+            
             <CategoryRow
               title="New Prompts"
               subtitle="Fresh AI prompts added today"
@@ -312,8 +202,11 @@ export default function AllCategory() {
                   item.badge === "New"
               )}
             />
+            }
 
             {/* TRENDING */}
+            {filteredCategories.filter((item) => item.badge === "Trending").length > 0 &&
+            
             <CategoryRow
               title="Trending"
               subtitle="Most viral prompts today"
@@ -324,8 +217,11 @@ export default function AllCategory() {
                   item.badge === "Trending"
               )}
             />
+            }
 
             {/* POPULAR */}
+            {filteredCategories.filter((item) => item.badge === "Popular").length > 0 &&
+            
             <CategoryRow
               title="Popular Collections"
               subtitle="Most copied categories"
@@ -336,9 +232,11 @@ export default function AllCategory() {
                   item.badge === "Popular"
               )}
             />
-
+            }
             {/* HOT */}
-            <CategoryRow
+            {filteredCategories.filter((item) => item.badge === "Hot").length > 0 &&
+            
+              <CategoryRow
               title="Hot Right Now"
               subtitle="Top performing prompts"
               icon="🚀"
@@ -347,10 +245,10 @@ export default function AllCategory() {
                 (item) =>
                   item.badge === "Hot"
               )}
-            />
+            />}
+            
 
           </div>
-
         )}
 
       </main>
