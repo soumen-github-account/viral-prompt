@@ -75,8 +75,7 @@ export default async function CategoryPage({
 
   await connectDB();
 
-  const { slug } =
-    await params;
+  const { slug } = await params;
 
   // filter categories by badge
   const filteredData =

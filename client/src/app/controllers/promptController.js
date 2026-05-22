@@ -37,7 +37,7 @@ export const createPrompt = async(req) => {
                 cloudinary.uploader
                 .upload_stream(
                     {
-                        folder: "ai-prompts",
+                        folder: "prompt-photo",
                     }, (error, result) => {
                         if (error) reject(error);
                         else resolve(result);

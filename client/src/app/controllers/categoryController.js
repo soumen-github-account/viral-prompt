@@ -41,7 +41,7 @@ export const createCategory = async (req) => {
         cloudinary.uploader
           .upload_stream(
             {
-              folder: "ai-categories",
+              folder: "prompt-categories",
             },
             (error, result) => {
               if (error) reject(error);
