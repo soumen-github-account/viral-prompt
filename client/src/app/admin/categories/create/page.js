@@ -35,7 +35,7 @@ export default function CreateCategoryPage() {
     "cinematic",
     "Indian",
     "saree",
-    "cyberpunk",
+    "couple",
     "realistic",
     "fantasy",
     "luxury",

@@ -270,7 +270,7 @@ export default function CreatePromptPage() {
     "cinematic",
     "Indian",
     "saree",
-    "cyberpunk",
+    "couple",
     "realistic",
     "fantasy",
     "luxury",
