@@ -16,6 +16,7 @@ export default function CreateCategoryPage() {
     "Stable Diffusion",
     "Adobe Firefly",
     "Ideogram",
+    "ChatGpt"
   ];
 
   const badgeOptions = [
@@ -31,17 +32,25 @@ export default function CreateCategoryPage() {
   const tagOptions = [
     "girls",
     "boys",
+    "couple",
+    "friend",
     "anime",
     "cinematic",
     "Indian",
     "saree",
-    "couple",
+    "ghibli",
+    "art",
+    "scrapbook",
+    "chibi",
+    "nature",
+    "collage",
+    "ocation",
     "realistic",
     "fantasy",
     "luxury",
     "dark",
     "4k",
-    "Trending",
+    "gym",
     "Wallpaper",
     "portrait",
     "cute",
