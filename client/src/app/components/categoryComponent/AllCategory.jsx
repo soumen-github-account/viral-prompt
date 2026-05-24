@@ -246,7 +246,45 @@ export default function AllCategory() {
                   item.badge === "Hot"
               )}
             />}
+
+            {filteredCategories.filter((item) => item.tags.includes("boys")).length > 0 &&
             
+              <CategoryRow
+              title="For Boys"
+              subtitle="Top performing prompts"
+              icon="🚀"
+              tag="boys"
+              data={filteredCategories.filter(
+                (item) =>
+                  item.tags.includes("boys")
+              )}
+            />}
+
+            {filteredCategories.filter((item) => item.tags.includes("girls")).length > 0 &&
+            
+              <CategoryRow
+              title="For Girls"
+              subtitle="Top performing prompts"
+              icon="🚀"
+              tag="girls"
+              data={filteredCategories.filter(
+                (item) =>
+                  item.tags.includes("girls")
+              )}
+            />}
+
+            {filteredCategories.filter((item) => item.tags.includes("couple")).length > 0 &&
+            
+              <CategoryRow
+              title="For Couples"
+              subtitle="Top performing prompts"
+              icon="🚀"
+              tag="couple"
+              data={filteredCategories.filter(
+                (item) =>
+                  item.tags.includes("couple")
+              )}
+            />}
 
           </div>
         )}

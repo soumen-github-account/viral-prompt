@@ -65,6 +65,9 @@ export async function generateStaticParams() {
     { slug: "new" },
     { slug: "popular" },
     { slug: "hot" },
+    { slug: "boys" },
+    { slug: "girls" },
+    { slug: "couple" },
   ];
 }
 
@@ -86,7 +89,18 @@ export default async function CategoryPage({
           "i"
         ),
       },
-    });
+    },
+    {
+      tags: {
+        $in: [
+          new RegExp(
+            `^${slug}$`,
+            "i"
+          ),
+        ],
+      },
+    },
+  );
 
   return (
     <div className="min-h-screen bg-[#FAFBFD] pt-28 px-4 sm:px-10">

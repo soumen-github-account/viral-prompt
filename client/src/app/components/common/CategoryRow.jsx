@@ -9,7 +9,8 @@ export default function CategoryRow({
   subtitle,
   icon,
   data,
-  slug
+  slug,
+  tag
 }) {
   return (
     <section className="space-y-4">
@@ -30,7 +31,7 @@ export default function CategoryRow({
 
         </div>
 
-        <Link href={`/category/${slug}`}><button className="text-sm flex items-center font-bold text-[#FF2A85] cursor-pointer hover:underline">
+        <Link href={`/category/${slug || tag}`}><button className="text-sm flex items-center font-bold text-[#FF2A85] cursor-pointer hover:underline">
           View All <MdOutlineArrowRight className="text-[20px]" />
         </button></Link>
 
