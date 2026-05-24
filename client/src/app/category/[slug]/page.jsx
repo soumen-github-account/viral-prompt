@@ -135,12 +135,12 @@ export default async function CategoryPage({
         // TAGS
         {
           tags: {
-            $in: [
-              new RegExp(
+            $elemMatch: {
+              $regex: new RegExp(
                 `^${slug}$`,
                 "i"
               ),
-            ],
+            },
           },
         },
 
