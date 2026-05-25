@@ -183,6 +183,153 @@ export const getSinglePrompt =
 
 // UPDATE PROMPT
 
+// export const updatePrompt = async (
+//   req,
+//   id
+// ) => {
+
+//   try {
+
+//     await connectDB();
+
+//     const formData =
+//       await req.formData();
+
+//     const title =
+//       formData.get("title");
+
+//     const description =
+//       formData.get(
+//         "description"
+//       );
+
+//     const promptText =
+//       formData.get("prompt");
+
+//     const categoryId =
+//       formData.get(
+//         "categoryId"
+//       );
+
+//     const tool =
+//       formData.get("tool");
+
+//     const badge =
+//       formData.get("badge");
+
+//     const badgeBg =
+//       formData.get(
+//         "badgeBg"
+//       );
+
+//     const tags = JSON.parse(
+//       formData.get("tags") ||
+//       "[]"
+//     );
+
+//     const updateData = {
+//       title,
+//       description,
+//       prompt: promptText,
+//       categoryId,
+//       tool,
+//       badge,
+//       badgeBg,
+//       tags,
+//     };
+
+//     const imageFile =
+//       formData.get("image");
+
+//     // upload new image
+//     if (
+//       imageFile &&
+//       imageFile.name
+//     ) {
+
+//       const bytes =
+//         await imageFile.arrayBuffer();
+
+//       const buffer =
+//         Buffer.from(bytes);
+
+//       const uploadResult =
+//         await new Promise(
+//           (
+//             resolve,
+//             reject
+//           ) => {
+
+//             cloudinary.uploader
+//               .upload_stream(
+//                 {
+//                   folder:
+//                     "ai-prompts",
+//                 },
+//                 (
+//                   error,
+//                   result
+//                 ) => {
+
+//                   if (error)
+//                     reject(
+//                       error
+//                     );
+
+//                   else
+//                     resolve(
+//                       result
+//                     );
+//                 }
+//               )
+//               .end(buffer);
+//           }
+//         );
+
+//       updateData.image =
+//         uploadResult.secure_url;
+//     }
+
+//     const updatedPrompt =
+//       await Prompt.findByIdAndUpdate(
+//         id,
+//         updateData,
+//         {
+//           new: true,
+//         }
+//       );
+
+//     return Response.json(
+//       {
+//         success: true,
+//         message:
+//           "Prompt updated successfully",
+//         data: updatedPrompt,
+//       },
+//       {
+//         status: 200,
+//       }
+//     );
+
+//   } catch (error) {
+
+//     console.log(error);
+
+//     return Response.json(
+//       {
+//         success: false,
+//         message:
+//           error.message,
+//       },
+//       {
+//         status: 500,
+//       }
+//     );
+//   }
+// };
+
+// UPDATE PROMPT CONTROLLER
+
 export const updatePrompt = async (
   req,
   id
@@ -212,10 +359,16 @@ export const updatePrompt = async (
       );
 
     const tool =
-      formData.get("tool");
+      formData
+        .get("tool")
+        ?.trim()
+        .toLowerCase();
 
     const badge =
-      formData.get("badge");
+      formData
+        .get("badge")
+        ?.trim()
+        .toLowerCase();
 
     const badgeBg =
       formData.get(
@@ -227,21 +380,66 @@ export const updatePrompt = async (
       "[]"
     );
 
+    // CATEGORY
+    const category =
+      await Category.findById(
+        categoryId
+      );
+
+    if (!category) {
+
+      return Response.json(
+        {
+          success: false,
+          message:
+            "Category not found",
+        },
+        {
+          status: 404,
+        }
+      );
+    }
+
+    const categorySlug =
+      category.slug;
+
+    const categoryTitle =
+      category.title;
+
+    // UPDATE DATA
     const updateData = {
-      title,
-      description,
-      prompt: promptText,
+
+      title:
+        title?.trim(),
+
+      description:
+        description?.trim(),
+
+      prompt:
+        promptText?.trim(),
+
       categoryId,
+
+      categorySlug,
+
+      categoryTitle,
+
       tool,
+
       badge,
+
       badgeBg,
+
       tags,
+
     };
 
+    // IMAGE
     const imageFile =
-      formData.get("image");
+      formData.get(
+        "image"
+      );
 
-    // upload new image
     if (
       imageFile &&
       imageFile.name
@@ -264,7 +462,7 @@ export const updatePrompt = async (
               .upload_stream(
                 {
                   folder:
-                    "ai-prompts",
+                    "prompt-photo",
                 },
                 (
                   error,
@@ -290,6 +488,7 @@ export const updatePrompt = async (
         uploadResult.secure_url;
     }
 
+    // UPDATE
     const updatedPrompt =
       await Prompt.findByIdAndUpdate(
         id,
@@ -299,12 +498,30 @@ export const updatePrompt = async (
         }
       );
 
+    if (
+      !updatedPrompt
+    ) {
+
+      return Response.json(
+        {
+          success: false,
+          message:
+            "Prompt not found",
+        },
+        {
+          status: 404,
+        }
+      );
+    }
+
     return Response.json(
       {
         success: true,
         message:
           "Prompt updated successfully",
-        data: updatedPrompt,
+
+        data:
+          updatedPrompt,
       },
       {
         status: 200,
@@ -327,7 +544,6 @@ export const updatePrompt = async (
     );
   }
 };
-
 
 // DELETE PROMPT
 
