@@ -1,31 +1,48 @@
-// import PromptCard from "@/app/components/common/PromptCard";
+
 // import PromptMainCard from "@/app/components/common/PromptMainCard";
-// // import { categories, prompts } from "@/data/promptCards";
-// import { useAppContext } from "@/contexts/AppContext";
+// import connectDB from "@/app/lib/mongodb";
+// import Category from "@/app/models/Category";
+// import Prompt from "@/app/models/Prompt";
 
-// export function generateStaticParams() {
-//   const {categories} = useAppContext()
-//   return categories.map((item) => ({
-//     slug: item.slug,
-//   }));
 
+// // generate static pages
+// export async function generateStaticParams() {
+
+//   await connectDB();
+
+//   const categories =
+//     await Category.find();
+
+//   return categories.map(
+//     (item) => ({
+//       slug: item.slug,
+//     })
+//   );
 // }
+
 
 // export default async function PromptsPage({
 //   params,
 // }) {
-//   const {categories, prompts} = useAppContext()
+
+//   await connectDB();
+
 //   const { slug } = await params;
 
-//   const category = categories.find(
-//     (item) => item.slug === slug
-//   );
+//   // get category
+//   const category =
+//     await Category.findOne({
+//       slug,
+//     });
 
-//   const filteredPrompts = prompts.filter(
-//     (item) => item.categorySlug === slug
-//   );
+//   // get prompts
+//   const filteredPrompts =
+//     await Prompt.find({
+//       categorySlug: slug,
+//     });
 
 //   if (!category) {
+
 //     return (
 //       <div className="pt-40 text-center text-xl font-bold">
 //         Category not found
@@ -49,7 +66,9 @@
 
 //         <div className="absolute bottom-0 left-0 p-8 lg:p-10 text-white">
 
-//           <span className={`text-[11px] font-bold px-3 py-1 rounded-full ${category.badgeBg}`}>
+//           <span
+//             className={`text-[11px] font-bold px-3 py-1 rounded-full ${category.badgeBg}`}
+//           >
 //             {category.badge}
 //           </span>
 
@@ -78,54 +97,28 @@
 
 //       </div>
 
-//       {/* PROMPTS GRID */}
-//       {/* <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-5">
+//       {/* PROMPTS */}
+//       <div className="space-y-8">
 
-//         {filteredPrompts.map((card, idx) => (
-//           <PromptCard
-//             key={idx}
+//         {filteredPrompts.map((card) => (
+//           <PromptMainCard
+//             key={card._id}
 //             card={card}
 //           />
 //         ))}
 
-//       </div> */}
+//       </div>
 
-//         <div className="space-y-8">
-
-//   {filteredPrompts.map((card, idx) => (
-//     <PromptMainCard
-//       key={idx}
-//       card={card}
-//     />
-//   ))}
-
-// </div>
 //     </div>
 //   );
 // }
 
-
 import PromptMainCard from "@/app/components/common/PromptMainCard";
+
 import connectDB from "@/app/lib/mongodb";
+
 import Category from "@/app/models/Category";
 import Prompt from "@/app/models/Prompt";
-
-
-// generate static pages
-export async function generateStaticParams() {
-
-  await connectDB();
-
-  const categories =
-    await Category.find();
-
-  return categories.map(
-    (item) => ({
-      slug: item.slug,
-    })
-  );
-}
-
 
 export default async function PromptsPage({
   params,
@@ -133,30 +126,37 @@ export default async function PromptsPage({
 
   await connectDB();
 
-  const { slug } = await params;
+  const { slug } =
+    await params;
 
-  // get category
+  // CATEGORY
   const category =
     await Category.findOne({
       slug,
     });
 
-  // get prompts
+  // NOT FOUND
+  if (!category) {
+
+    return (
+
+      <div className="pt-40 text-center text-xl font-bold">
+
+        Category not found
+
+      </div>
+
+    );
+  }
+
+  // PROMPTS
   const filteredPrompts =
     await Prompt.find({
       categorySlug: slug,
     });
 
-  if (!category) {
-
-    return (
-      <div className="pt-40 text-center text-xl font-bold">
-        Category not found
-      </div>
-    );
-  }
-
   return (
+
     <div className="min-h-screen bg-[#FAFBFD] pt-28 px-4 sm:px-10">
 
       {/* HERO */}
@@ -175,26 +175,36 @@ export default async function PromptsPage({
           <span
             className={`text-[11px] font-bold px-3 py-1 rounded-full ${category.badgeBg}`}
           >
+
             {category.badge}
+
           </span>
 
           <h1 className="text-4xl lg:text-6xl font-black tracking-tight mt-4">
+
             {category.title}
+
           </h1>
 
           <p className="text-sm text-white/70 max-w-2xl mt-3 leading-relaxed">
+
             {category.description}
+
           </p>
 
           <div className="flex flex-wrap gap-2 mt-5">
 
-            {category.tags.map((tag) => (
+            {category.tags?.map((tag) => (
+
               <span
                 key={tag}
                 className="bg-white/10 border border-white/10 backdrop-blur-md px-3 py-1 rounded-full text-xs font-semibold"
               >
+
                 #{tag}
+
               </span>
+
             ))}
 
           </div>
@@ -207,14 +217,17 @@ export default async function PromptsPage({
       <div className="space-y-8">
 
         {filteredPrompts.map((card) => (
+
           <PromptMainCard
             key={card._id}
             card={card}
           />
+
         ))}
 
       </div>
 
     </div>
+
   );
 }
