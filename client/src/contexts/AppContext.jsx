@@ -8,15 +8,20 @@ export const AppContextProvider = ({children}) => {
 
     const [categories, setCategories] = useState([])
     const [prompts, setPrompts] = useState([])
-
+    const [categoryLoading, setCategoryLoading] = useState(false)
+    
+    
     const getAllCategories = async() =>{
         try {
+            setCategoryLoading(true)
             const res = await axios.get("/api/categories");
             if(res.data.success){
                 setCategories(res.data.data);
+                setCategoryLoading(false)
             }
         } catch (error) {
             console.log(error)
+            setCategoryLoading(false)
         }
     }
 
@@ -38,7 +43,7 @@ export const AppContextProvider = ({children}) => {
     }, [])
 
     const value = {
-        categories, prompts
+        categories, prompts, categoryLoading
     }
 
     return (

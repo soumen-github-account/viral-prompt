@@ -89,7 +89,7 @@ const PromptCard = ({ card }) => {
             </div>
             
             {/* Professional Copy Button with Icon */}
-            <Link href={`/prompts/${card.slug}`}><button className="bg-[#FF2A85] hover:bg-[#e01f70] text-white font-bold text-[10px] px-3 py-1.5 rounded-xl shadow-sm shadow-pink-100 flex items-center space-x-1.5 transition-all duration-200 active:scale-95">
+            <Link href={`/prompts/${card.slug}`} scroll={true}><button className="bg-[#FF2A85] hover:bg-[#e01f70] text-white font-bold text-[10px] px-3 py-1.5 rounded-xl shadow-sm shadow-pink-100 flex items-center space-x-1.5 transition-all duration-200 active:scale-95">
               <FiExternalLink className="text-xs stroke-[2.5]" />
               <span>Show Prompt</span>
             </button></Link>

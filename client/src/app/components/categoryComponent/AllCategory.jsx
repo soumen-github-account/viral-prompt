@@ -7,14 +7,14 @@ import { HiSparkles } from "react-icons/hi2";
 
 import CategoryRow from "../common/CategoryRow";
 import { useAppContext } from "@/contexts/AppContext";
+import { PromptSkeleton } from "./PromptSkeleton";
 
 export default function AllCategory() {
 
-  const { categories } = useAppContext();
+  const { categories, categoryLoading } = useAppContext();
 
   const [search, setSearch] = useState("");
-  const [selectedTag, setSelectedTag] =
-    useState("All");
+  const [selectedTag, setSelectedTag] = useState("All");
 
   // ALL TAGS
   const allTags = useMemo(() => {
@@ -255,8 +255,10 @@ export default function AllCategory() {
 
         </div>
 
-        {/* EMPTY */}
-        {filteredCategories.length === 0 ? (
+        {
+          categoryLoading ? (
+            <PromptSkeleton />
+          ) : filteredCategories.length === 0 ? (
 
           <div className="bg-white border border-dashed border-pink-200 rounded-[30px] py-20 flex flex-col items-center justify-center text-center">
 
@@ -372,6 +374,7 @@ export default function AllCategory() {
           </div>
 
         )}
+        
 
       </main>
 
