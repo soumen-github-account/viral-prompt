@@ -38,7 +38,7 @@ export default async function sitemap() {
   }));
 
   const promptUrls = prompts.map((prompt) => ({
-    url: `https://viralprompt.soumendas.space/prompts/${prompt.categorySlug}`,
+    url: `https://viralprompt.soumendas.space/prompts/${prompt.slug}`,
     lastModified: prompt.updatedAt,
     priority: 0.9,
   }));
