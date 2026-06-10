@@ -9,10 +9,6 @@ export default async function sitemap() {
     .select("slug updatedAt")
     .lean();
 
-  const prompts = await Prompt.find({})
-    .select("slug updatedAt")
-    .lean();
-
   const staticPages = [
     {
       url: "https://viralprompt.soumendas.space",
@@ -37,11 +33,21 @@ export default async function sitemap() {
     priority: 0.8,
   }));
 
-  const promptUrls = prompts.map((prompt) => ({
-    url: `https://viralprompt.soumendas.space/prompts/${prompt.slug}`,
-    lastModified: prompt.updatedAt,
-    priority: 0.9,
-  }));
+  const prompts = await Prompt.find({})
+    .select("categorySlug updatedAt")
+    .lean();
+
+    const promptUrls = prompts
+    .filter(
+        (prompt) =>
+        prompt.categorySlug &&
+        prompt.categorySlug !== "undefined"
+    )
+    .map((prompt) => ({
+        url: `https://viralprompt.soumendas.space/prompts/${prompt.categorySlug}`,
+        lastModified: prompt.updatedAt,
+        priority: 0.9,
+    }));
 
   return [
     ...staticPages,
